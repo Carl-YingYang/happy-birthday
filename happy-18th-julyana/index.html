@@ -1093,12 +1093,19 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
   <div class="vidwrap a" style="--n:3">
     <i class="vcorn tl" aria-hidden="true"></i><i class="vcorn tr" aria-hidden="true"></i><i class="vcorn bl" aria-hidden="true"></i><i class="vcorn br" aria-hidden="true"></i>
     <video id="vid" src="assets/vid/julyana.mp4" controls preload="metadata" playsinline webkit-playsinline aria-label="Pelikula para kay Julyana">Ang browser mo ay hindi sumusuporta sa video playback — subukan ang Chrome, Edge, o Safari.</video>
+    <div class="vid-load" hidden>
+      <span class="vid-spin" aria-hidden="true"></span>
+      <p>Naglo-load ang pelikula… sandali lang, mahal.</p>
+    </div>
     <div class="vid-msg" hidden>
       <p class="vid-msg-t">Hindi ma-load ang pelikula.</p>
-      <p class="vid-msg-s">Siguraduhing nasa <b>assets/vid/julyana.mp4</b> ang file — o <a href="assets/vid/julyana.mp4" target="_blank" rel="noopener">buksan sa bagong tab</a>.</p>
+      <p class="vid-msg-s">Siguraduhing nasa <b>assets/vid/julyana.mp4</b> ang file — o <a href="assets/vid/julyana.mp4" download="para-kay-julyana.mp4">i-download muna</a>.</p>
     </div>
   </div>
-  <p class="vid-cap a" style="--n:4"><svg class="vid-fl" viewBox="0 0 120 12" aria-hidden="true"><path d="M2 6 h36 M82 6 h36" stroke="#c5a46a" stroke-width="1"/><path d="M60 1 l5 5 -5 5 -5 -5 Z" fill="none" stroke="#c5a46a" stroke-width="1"/></svg>THE END — o bagong simula?<svg class="vid-fl" viewBox="0 0 120 12" aria-hidden="true"><path d="M2 6 h36 M82 6 h36" stroke="#c5a46a" stroke-width="1"/><path d="M60 1 l5 5 -5 5 -5 -5 Z" fill="none" stroke="#c5a46a" stroke-width="1"/></svg></p>
+  <div class="vid-actions a" style="--n:4">
+    <a class="vid-dl" href="assets/vid/julyana.mp4" download="para-kay-julyana.mp4" aria-label="I-download ang pelikula"><svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M6 1v7M3 5.5 6 8.5 9 5.5M2 11h8" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>I-download ang pelikula</a>
+  </div>
+  <p class="vid-cap a" style="--n:5"><svg class="vid-fl" viewBox="0 0 120 12" aria-hidden="true"><path d="M2 6 h36 M82 6 h36" stroke="#c5a46a" stroke-width="1"/><path d="M60 1 l5 5 -5 5 -5 -5 Z" fill="none" stroke="#c5a46a" stroke-width="1"/></svg>THE END — o bagong simula?<svg class="vid-fl" viewBox="0 0 120 12" aria-hidden="true"><path d="M2 6 h36 M82 6 h36" stroke="#c5a46a" stroke-width="1"/><path d="M60 1 l5 5 -5 5 -5 -5 Z" fill="none" stroke="#c5a46a" stroke-width="1"/></svg></p>
 </section>
 </main>
 
@@ -1537,9 +1544,18 @@ if(vid){
     if(Math.abs(r-16/9)>.02){vidWrap.style.setProperty("--vr",vid.videoWidth+" / "+vid.videoHeight)}}
   vid.addEventListener("loadedmetadata",vidFit);
   if(vid.readyState>=1){vidFit()}
+  /* buffering status — para kitang-kita na naglo-load lang, hindi sira (malaki ang file) */
+  function vidBuf(on){
+    if(!vidWrap){return}
+    vidWrap.classList.toggle("vid-loading",!!on);
+    var m=vidWrap.querySelector(".vid-load");if(m){m.hidden=!on}}
+  vid.addEventListener("waiting",function(){vidBuf(true)});
+  vid.addEventListener("playing",function(){vidBuf(false)});
+  vid.addEventListener("canplay",function(){vidBuf(false)});
   /* graceful fallback kapag missing o hindi playable ang video file */
   vid.addEventListener("error",function(){
     if(!vidWrap){return}
+    vidBuf(false);
     vidWrap.classList.add("vid-err");vid.style.display="none";
     var m=vidWrap.querySelector(".vid-msg");if(m){m.hidden=false}});
 }
@@ -1580,6 +1596,15 @@ body[data-n="8"] .wishhud,body[data-n="8"] .treashud{opacity:0!important;pointer
 .vid-msg-s{font-size:.92rem;color:#c9b491}
 .vid-msg-s b{font-style:normal;color:#e9cf9a;font-weight:600}
 .vid-msg-s a{color:#e9cf9a;text-decoration:underline;text-underline-offset:3px}
+.vid-load{position:absolute;inset:0;z-index:4;display:none;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;padding:1.2rem;text-align:center;background:rgba(8,3,15,.66)}
+.vidwrap.vid-loading .vid-load{display:flex}
+.vid-load p{font:italic 1rem/1.4 'Cormorant Garamond',Georgia,serif;color:#e2cfb0}
+.vid-spin{width:36px;height:36px;border-radius:50%;border:2px solid rgba(233,207,154,.25);border-top-color:#e9cf9a;animation:vidspin .9s linear infinite}
+@keyframes vidspin{to{transform:rotate(360deg)}}
+.vid-actions{margin-top:.3rem}
+.vid-dl{display:inline-flex;align-items:center;gap:.5rem;padding:.52rem 1.15rem;border:1px solid rgba(215,184,133,.45);border-radius:99px;background:rgba(24,18,30,.45);color:#e9cf9a;font:400 .78rem/1 'Jost',system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .4s,background .4s}
+.vid-dl:hover,.vid-dl:focus-visible{border-color:rgba(231,197,142,.85);background:rgba(31,24,38,.62)}
+@media (max-width:560px){.vid-dl{padding:.46rem .95rem;font-size:.72rem;letter-spacing:.15em}}
 @media (max-height:600px){
   #s6 .fs-title,#s6 .sub,#s6 .vid-cap{display:none}
   #s6{gap:.35rem;padding-top:calc(1.2rem + env(safe-area-inset-top,0px));padding-bottom:calc(2.2rem + env(safe-area-inset-bottom,0px))}
