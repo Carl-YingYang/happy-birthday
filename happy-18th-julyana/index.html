@@ -1051,7 +1051,7 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
   </div>
   <div class="post">
     <p class="big cu"><span class="shine">Happy 18th, Julyana</span></p>
-    <p class="sub">May this new chapter be filled with adventures, extraordinary memories, and beautiful things yet to come. Sa totoo lang.</p>
+    <p class="sub">May this new chapter be filled with adventures, extraordinary memories, and beautiful things yet to come.</p>
     <button id="again" type="button">ULITIN MO PARA MANIWALA KANG SAYO TO <span aria-hidden="true">↺</span></button>
   </div>
   <button class="fairy" data-f="3" aria-label="Nakatagong liwanag ng duwende" style="--fx:86%;--fy:20%"><i aria-hidden="true"></i></button>
@@ -1059,9 +1059,9 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
 
 <!-- 5 time capsule -->
 <section class="scn lt" id="s5">
-  <p class="tag cz a" style="--n:0">MESSAGE MO TO SA RUFTURE SELF MOSO DAPAT MAANGAS</p>
+  <p class="tag cz a" style="--n:0">ISANG TIME CAPSULE · PARA SA FUTURE IKAW</p>
   <h2 class="fs-title a" style="--n:1"><span class="shine">A Little Promise<br>to My Future Self</span></h2>
-  <p class="sub a" style="--n:2">eyyy maangas</p>
+  <p class="sub a" style="--n:2">isang liham para sa Julyana ng mga susunod na taon</p>
   <div class="fs-card a" style="--n:3">
     <svg class="vine tl" viewBox="0 0 90 90" aria-hidden="true"><path d="M4 86 C 20 60, 18 30, 44 10" fill="none" stroke="#77855c" stroke-width="1.6"/><path d="M18 62 q10 -2 14 8 q-12 4 -14 -8Z" fill="#8a9668"/><path d="M26 40 q12 -4 16 6 q-13 5 -16 -6Z" fill="#77855c"/><circle cx="46" cy="9" r="3.2" fill="#b77d83"/></svg>
     <svg class="vine br" viewBox="0 0 90 90" aria-hidden="true"><path d="M4 86 C 20 60, 18 30, 44 10" fill="none" stroke="#77855c" stroke-width="1.6"/><path d="M26 40 q12 -4 16 6 q-13 5 -16 -6Z" fill="#77855c"/><path d="M34 22 q11 -5 16 4 q-12 6 -16 -4Z" fill="#8a9668"/><circle cx="46" cy="9" r="3.2" fill="#b77d83"/></svg>
@@ -1087,14 +1087,14 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
 
 <!-- 8 the film -->
 <section class="scn lt" id="s6">
-  <p class="tag cz a" style="--n:0">CLICK THIS HINDI ETO SCAM!</p>
-  <h2 class="fs-title a" style="--n:1"><span class="shine">And They Lived<br>Happily Ever After… uhULOL </span></h2>
-  <p class="sub a" style="--n:2">panoorin mo nalang</p>
+  <p class="tag cz a" style="--n:0">ANG HULING EKSENA · A LITTLE FILM FOR YOU</p>
+  <h2 class="fs-title a" style="--n:1"><span class="shine">And They Lived<br>Happily Ever After…</span></h2>
+  <p class="sub a" style="--n:2">isang munting pelikula, gawa para sa iyo — pindutin ang play at enjoy, mahal</p>
   <div class="vidwrap a" style="--n:3">
     <i class="vcorn tl" aria-hidden="true"></i><i class="vcorn tr" aria-hidden="true"></i><i class="vcorn bl" aria-hidden="true"></i><i class="vcorn br" aria-hidden="true"></i>
     <video id="vid" src="assets/vid/julyana.mp4" controls preload="metadata" playsinline webkit-playsinline aria-label="Pelikula para kay Julyana">Ang browser mo ay hindi sumusuporta sa video playback — subukan ang Chrome, Edge, o Safari.</video>
     <div class="vid-msg" hidden>
-      <p class="vid-msg-t">Hindi ma-load aray kopo!.</p>
+      <p class="vid-msg-t">Hindi ma-load ang pelikula.</p>
       <p class="vid-msg-s">Siguraduhing nasa <b>assets/vid/julyana.mp4</b> ang file — o <a href="assets/vid/julyana.mp4" target="_blank" rel="noopener">buksan sa bagong tab</a>.</p>
     </div>
   </div>
@@ -1137,9 +1137,19 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
   </div>
 </div>
 
+<script id="perf-tuning">
+/* phone perf tuning — binabawasan ang canvas cost sa mobile (30fps + mas mababang resolution) */
+var PERF=(function(){
+  var mob=false,ns={},last={};
+  try{mob=matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<=820}catch(e){}
+  return{mob:mob,dpr:mob?1.35:2,
+    ok:function(k){if(!this.mob){return true}var now=performance.now();if(now-(last[k]||0)>=31){last[k]=now;return true}return false}};
+})();
+</script>
+
 <script>
 (function(){
-  var cv=document.getElementById('fx'),cx=cv.getContext('2d'),R=Math.min(window.devicePixelRatio||1,2),W,H,ps=[],ff=[],bf=[],ba=1,bat=1,RM=matchMedia('(prefers-reduced-motion:reduce)').matches,i,T=0;
+  var cv=document.getElementById('fx'),cx=cv.getContext('2d'),R=Math.min(window.devicePixelRatio||1,window.PERF?PERF.dpr:2),W,H,ps=[],ff=[],bf=[],ba=1,bat=1,RM=matchMedia('(prefers-reduced-motion:reduce)').matches,i,T=0;
   function sz(){W=cv.width=innerWidth*R;H=cv.height=innerHeight*R}sz();addEventListener('resize',sz);
   var cols=['#f6a8c0','#f2c7a0','#ffffff','#d3c2f7','#ee94b0','#ffdcae'],sp=document.createElement('canvas');sp.width=sp.height=64;
   var sg=sp.getContext('2d'),gr=sg.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,252,210,1)');gr.addColorStop(.16,'rgba(255,232,120,.8)');gr.addColorStop(.5,'rgba(255,205,80,.18)');gr.addColorStop(1,'rgba(255,200,80,0)');sg.fillStyle=gr;sg.fillRect(0,0,64,64);
@@ -1153,7 +1163,7 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
       cx.fillStyle='rgba(255,255,255,.55)';cx.beginPath();cx.arc(20,-9,2.4,0,6.3);cx.arc(14,13,1.8,0,6.3);cx.fill();cx.restore()}
     cx.fillStyle='#3a1f34';cx.beginPath();cx.ellipse(0,0,1.8,11,0,0,6.3);cx.fill();cx.strokeStyle='#3a1f34';cx.lineWidth=.8;cx.beginPath();cx.moveTo(0,-10);cx.quadraticCurveTo(-4,-18,-8,-19);cx.moveTo(0,-10);cx.quadraticCurveTo(4,-18,8,-19);cx.stroke();cx.restore()}
   function burst(x,y){for(var i=0;i<110;i++){var a=Math.random()*6.283,s=(3+Math.random()*9)*R;ps.push({x:x*R,y:y*R,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5*R,w:(5+Math.random()*6)*R,c:cols[i%6],rt:Math.random()*6,vr:Math.random()*.3-.15,l:1,k:1})}}
-  (function t(){T=performance.now()/1000;cx.clearRect(0,0,W,H);ba+=(bat-ba)*.03;
+  (function t(){requestAnimationFrame(t);if(!PERF.ok(1)||window.__vidOn){if(window.__vidOn&&!t.c){cx.clearRect(0,0,W,H);t.c=1}return}window.__d1=(window.__d1||0)+1;t.c=0;T=performance.now()/1000;cx.clearRect(0,0,W,H);ba+=(bat-ba)*.03;
     for(var i=0;i<ff.length;i++){var f=ff[i];if(!RM){f.a+=Math.sin(T*.6+f.ph)*.06;f.x+=Math.cos(f.a)*f.v;f.y+=Math.sin(f.a)*f.v}
       if(f.x<-20)f.x=W+20;if(f.x>W+20)f.x=-20;if(f.y<H*.1)f.y=H*.95;if(f.y>H+20)f.y=H*.15;
       var al=Math.pow(Math.max(0,Math.sin(T*f.f+f.p)),2)*(bat<1?.5:1);cx.globalAlpha=al;cx.drawImage(sp,f.x-f.s,f.y-f.s,f.s*2,f.s*2)}
@@ -1164,7 +1174,7 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
         cx.save();cx.translate(p.x,p.y);cx.rotate(p.rt);cx.globalAlpha=.5*(bat<1?.5:1);cx.fillStyle=p.c;cx.beginPath();cx.ellipse(0,0,p.r*2.2,p.r*1.2,0,0,6.283);cx.fill();cx.restore()}}
     if(ba>.02)for(i=0;i<bf.length;i++){var b=bf[i];if(!RM){b.fl+=b.fs*.016;b.a+=Math.sin(T*.7+b.ph)*.03+Math.sin(T*2.3+b.ph)*.012;b.x+=Math.cos(b.a)*b.v;b.y+=Math.sin(b.a)*b.v+Math.sin(T*3+b.ph)*.35*R;
       if(b.x<-60*R||b.x>W+60*R||b.y<-60*R||b.y>H+60*R)b.a=Math.atan2(H/2-b.y,W/2-b.x)}BF(b)}
-    requestAnimationFrame(t)})();
+  })();
 
 
   var S=[].slice.call(document.querySelectorAll('.scn')),D=[].slice.call(document.querySelectorAll('#dt i')),sl=[].slice.call(document.querySelectorAll('.sl')),
@@ -1254,7 +1264,7 @@ button:focus-visible,.env:focus-visible,.book:focus-visible,.wstar:focus-visible
 (function(){
 var cv=document.getElementById('fx2');if(!cv)return;
 var cx=cv.getContext('2d');
-var R=Math.min(window.devicePixelRatio||1,2),W,H;
+var R=Math.min(window.devicePixelRatio||1,window.PERF?PERF.dpr:2),W,H;
 function sz(){W=cv.width=innerWidth*R;H=cv.height=innerHeight*R}sz();
 addEventListener('resize',sz);
 var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -1282,6 +1292,7 @@ if(ag)ag.addEventListener('click',function(){done=false;glit.length=0;rockets.le
 var bends=[].slice.call(document.querySelectorAll('#ck .flbend')),bs=bends.map(function(){return 0});
 function loop(now){
 requestAnimationFrame(loop);
+if(!PERF.ok(2)||window.__vidOn){if(window.__vidOn&&!loop.c){cx.clearRect(0,0,W,H);loop.c=1}return}window.__d2=(window.__d2||0)+1;loop.c=0;
 var t=now/1000,n=+(document.body.dataset.n||0);
 cx.clearRect(0,0,W,H);
 cx.globalCompositeOperation='lighter';
@@ -1511,8 +1522,10 @@ if(vid){
   var vidWrap=vid.closest(".vidwrap");
   vid.addEventListener("play",function(){
     if(au&&!au.paused){vidMusic=true;try{au.pause()}catch(e){}}
+    window.__vidOn=true;
     if(vidWrap){vidWrap.classList.add("playing")}});
   function vidResume(){
+    window.__vidOn=false;
     if(vidWrap){vidWrap.classList.remove("playing")}
     if(vidMusic){vidMusic=false;if(au&&au.paused){var p=au.play();if(p&&p.catch){p.catch(function(){})}}}}
   vid.addEventListener("pause",vidResume);
@@ -1577,6 +1590,22 @@ body[data-n="8"] .wishhud,body[data-n="8"] .treashud{opacity:0!important;pointer
   .vidwrap{border-radius:12px}
   .vid-cap{letter-spacing:.1em;gap:.55rem}
   .vid-fl{width:64px}
+}
+</style>
+<style id="mobile-perf">
+/* ---------- phone perf — mas mura ang compositing, di halata ang pinagkaiba ---------- */
+@media (pointer:coarse) and (max-width:820px){
+  .gr{mix-blend-mode:normal;opacity:.055}
+  .scn{filter:none;transition:opacity 1s,transform 1s}
+  .scn.on.lv{filter:none}
+  body[data-n="1"] .gd{filter:blur(1.2px) brightness(.85)!important}
+  body[data-n="2"] .gd,body[data-n="3"] .gd,body[data-n="4"] .gd,body[data-n="5"] .gd{filter:blur(3.5px) brightness(.5)!important}
+  body[data-n="8"] .gd{filter:blur(2.5px) brightness(.55) saturate(.7)!important}
+  button{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.16)}
+  .snd{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(31,25,17,.88)}
+  .wishhud,.treashud{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(24,20,12,.82)}
+  .lightbox{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(16,12,8,.97)}
+  .cake-modal{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(12,10,8,.97)}
 }
 </style>
 </body>
